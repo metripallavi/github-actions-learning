@@ -28,3 +28,13 @@ jobs:
 
       - name: Run Unit Tests
         run: pytest
+
+  build-demo:          # 👈 NEW JOB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build Job
+        run: |
+          echo "Running Build Job"
+          sleep 10
+          echo "Build Finished"
