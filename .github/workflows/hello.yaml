@@ -21,3 +21,6 @@ jobs:
 
       - name: Check Python Version
         run: python --version
+        
+      - name: Run Unit Tests
+        run: pytest
