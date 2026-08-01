@@ -1,12 +1,15 @@
-name: Hello GitHub Actions
+name: Checkout Demo
 
 on:
   push:
 
 jobs:
-  hello-job:
+  checkout-demo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Hello
-        run: echo "Hello from GitHub Actions!"
+      - name: Show current directory
+        run: pwd
+
+      - name: List files
+        run: ls -la
