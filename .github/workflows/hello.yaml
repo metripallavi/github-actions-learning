@@ -5,12 +5,18 @@ on:
     branches:
       - main
 
+  pull_request:
+
+  workflow_dispatch:
 
 jobs:
+
   python-demo:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -28,12 +34,31 @@ jobs:
       - name: Run Unit Tests
         run: pytest
 
-  build-demo:          # 👈 NEW JOB
+  build-demo:
+
+    needs: python-demo
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build Job
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create ZIP Artifact
         run: |
-          echo "Running Build Job"
-          sleep 10
-          echo "Build Finished"
+          zip -r fastapi-app.zip .
+
+      - name: Upload ZIP Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastapi-app
+          path: fastapi-app.zip
+
+      - name: Build Docker Image
+        run: |
+          docker build -t fastapi-demo:v1 .
+
+      - name: Show Docker Images
+        run: |
+          docker images
