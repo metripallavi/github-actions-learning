@@ -1,81 +1,39 @@
-name: Python CI
+name: FastAPI CI Pipeline
 
 on:
   push:
-
-  pull_request:
-
-  workflow_dispatch:
+    branches:
+      - main
 
 
 jobs:
-
   python-demo:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
-
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-
       - name: Install Dependencies
         run: pip install -r requirements.txt
-
 
       - name: Check Python Version
         run: python --version
 
-
       - name: Run Unit Tests
         run: pytest
 
-
-      # Create ZIP artifact
-      - name: Create ZIP Artifact
-        run: |
-          zip -r fastapi-app.zip .
-
-
-      - name: Upload ZIP Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: fastapi-app
-          path: fastapi-app.zip
-
-
-
-  build-demo:
-
+  build-demo:          # 👈 NEW JOB
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-
       - name: Build Job
         run: |
           echo "Running Build Job"
           sleep 10
           echo "Build Finished"
-
-
-      # Build Docker Image
-      - name: Build Docker Image
-        run: |
-          docker build -t fastapi-demo:v1 .
-
-
-      # Show Docker Images
-      - name: Show Docker Images
-        run: |
-          docker images
